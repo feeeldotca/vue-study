@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 export default {
   name: "EvSupply",
   data: function () {
@@ -60,14 +61,16 @@ export default {
       hasManager: false,
       evSupply: undefined,
       totalEV: 0,
-      rules: [
-        (value) =>
-          (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
-      ],
+      // rules: [
+      //   (value) =>
+      //     (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
+      // ],
     };
   },
   props: ['clear_data'],
-
+  computed:{
+    ...mapState(["rules"]),
+  },
   watch: {
       clear_data(newval, oldval) {
       // console.log('cleardata is newval', newval, oldval);

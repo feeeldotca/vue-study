@@ -14,27 +14,33 @@ const routes = [
     component: () => import('../views/Home.vue')
   },
   {
+    path: '/voldrop',
+    name: "VoltageDrop", 
+    component: () => import('@/components/VolDrop/VoltageDrop')
+  },
+
+  {
     path: '/blog',
     name: 'blog',
     component: ()=> import('@/components/blog/blog.vue'),
     children: [
       {
-        path: '/blog/addblog',
+        path: 'addblog',
         name: 'addblog',
         component: ()=> import('@/components/blog/AddBlog.vue')
       } ,
       {
-        path: '/blog/showblogs',
+        path: 'showblogs',
         name: 'showblogs',
         component: () => import('@/components/blog/ShowBlog.vue')
       },
       {
-        path: '/blog/editblog/:id',
+        path: 'editblog/:id',
         name: 'EditBlog',
         component: () => import('@/components/blog/EditBlog.vue')
       },
       {
-        path: '/blog/blog/:id',
+        path: 'blog/:id',
         name: 'single-blog',
         component: () => import('@/components/blog/SingleBlog.vue')
       },
@@ -47,27 +53,27 @@ const routes = [
     component: ()=> import('../components/Tables.vue'),
     children: [
       {
-        path: '/tables/table2',
+        path: 'table2',
         name: 'Table2',
         component: ()=> import('@/components/tables/table2.vue')
       },
       {
-        path: '/tables/table4',
+        path: 'table4',
         name: 'Table4',
         component: ()=> import('@/components/tables/table4.vue')
       },
       {
-        path: '/tables/table39',
+        path: 'table39',
         name: 'Table39',
         component: ()=> import('@/components/tables/table39.vue')
       },
       {
-        path: '/tables/notready',
+        path: 'notready',
         name: 'Not Ready',
         component: ()=> import('@/components/tables/notready.vue')
       },
       {
-        path: '/cssanimation',
+        path: 'cssanimation',
         name: 'Css Animation',
         component: ()=> import('@/components/cssanimation/SquareMonster.vue')
       },

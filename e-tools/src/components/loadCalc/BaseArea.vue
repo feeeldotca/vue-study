@@ -34,12 +34,14 @@ export default {
   data() {
     return {
       basearea: undefined,
-      rules: [
-        (value) => (value && RegExp("^[0-9]+$").test(value)) || "Positive number only",
-      ],
+      // rules: [
+      //   (value) => (value && RegExp("^[0-9]+$").test(value)) || "Positive number only",
+      // ],
     };
   },
-
+  computed:{
+    ...mapState(["rules"]),
+  },
   methods: {
     getArea() {      
       this.basearea = (!!this.basearea &&  !isNaN(this.basearea)) ? this.basearea : 0;

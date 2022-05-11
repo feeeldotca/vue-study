@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 reactive principle with Proxy and Reflect function</title>
+</head>
+<body>
+<h2></h2>
+    <script>
+        let people = {
+            name: "tom",
+            age: 20
+        }
+
+        let p = new Proxy(people, 
+        {
+            // called when a property of p was read
+            get(target, propName){
+                console.log(`property of p was read`)
+                return Reflect.get(target, propName)
+            },
+
+            //called when a property of p was updated, added
+            set(target, propName, value) {
+                console.log(`${propName} of p was updated`)
+                Reflect.set(target, propName, value)
+            },
+
+            //called when a property of p was deleted
+            deleteProperty(target, propName){
+                console.log(`${propName} of p was deleted!`)
+                Reflect.deleteProperty(target, propName)
+            }
+        })
+        
+    </script>
+</body>
+</html>

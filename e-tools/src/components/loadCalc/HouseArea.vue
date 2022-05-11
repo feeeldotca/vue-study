@@ -111,7 +111,7 @@
 <script>
 // import BaseArea from "@/components/BaseArea.vue";
 // import { mapMutations, mapGetters } from 'vuex'
-// import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: "HouseArea",
@@ -119,9 +119,9 @@ export default {
     return {
       picked: "m",
       hasbasement: false,
-      rules: [
-        (value) => (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
-      ],
+      // rules: [
+      //   (value) => (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
+      // ],
       basearea: undefined,
       combined: undefined,
     };
@@ -129,6 +129,7 @@ export default {
   // components: { BaseArea },
   props: ['clear_data'],
   computed: {
+    ...mapState(["rules"]),
     refdata: function() {
       // console.log("clear====", this.clear_data);
       return this.clear_data;

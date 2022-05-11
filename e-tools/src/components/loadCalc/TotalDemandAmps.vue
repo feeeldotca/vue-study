@@ -14,7 +14,7 @@
       <div class="mt-3 text-right text-warning" id="ampResults">{{ totalDemandWatts==0 ? '' : totalDemandAmps + ' A'}} </div>
     </v-row>
 
-    <div v-if="($store.state.houseDemands/240) <= 200">
+    <div v-if="(houseDemands/240) <= 200">
       <v-row class="mx10">
         <div class="col-md-8 col-8 text-right">
           <strong>Minimum Service Amps:</strong>
@@ -148,127 +148,13 @@ export default {
         size: {copper: "AWG #6 ", al: "AWG #4 "}, 
         hint: "Rule: 10-114, permitedd to be 1) insulated or bare & 2) sized smaller but not smaller than the current-carrying conductor(s) of the system being grounded."
       },
-      table13: {
-        name: "table13",
-        description:
-          "Rating or setting of overcurrent devices protecting conductors*",
-        rules: "(See Rules 14-104 and 28-204.)",
-        cols: 2,
-        ocAmp: [
-          15,
-          20,
-          25,
-          30,
-          35,
-          40,
-          45,
-          50,
-          60,
-          70,
-          80,
-          90,
-          100,
-          110,
-          125,
-          150,
-          175,
-          200,
-          225,
-          250,
-          300,
-          300,
-          350,
-          350,
-          400,
-          450,
-          500,
-          600,
-          600,
-          600,
-        ],
-        ampConductor: [
-          "0–15",
-          "16–20",
-          "21–25",
-          "26–30",
-          "31–35",
-          "36–40",
-          "41–45",
-          "46–50",
-          "51–60",
-          "61–70",
-          "71–80",
-          "81–90",
-          "91–100",
-          "101–110",
-          "111–125",
-          "126–150",
-          "151–175",
-          "176–200",
-          "201–225",
-          "226–250",
-          "251–275",
-          "276–300",
-          "301–325",
-          "326–350",
-          "351–400",
-          "401–450",
-          "451–500",
-          "501–525",
-          "526–550",
-          "551–600",
-        ],
-        star_notes:
-          "*For general use where not otherwise specifically provided for.",
-      },
-
-      table16: {
-        name: 'table16',
-        description: 'Minimum size of field-installed system bonding jumpers and bonding conductors (See Rule 10-614.)',
-        ampereRating: { 
-          description: [
-            'Ampere rating or setting of overcurrent device protecting conductor(s), equipment, etc.',
-            'Allowable ampacity of largest ungrounded conductor or group of conductors.',
-            'Not exceeding'
-            ],
-          value: [
-            20, 30, 60, 100, 200, 300, 400, 500, 600, 800, 1000, 1200, 1600, 2000, 2500, 3000, 4000, 5000, 6000
-          ]
-          },
-        bondingJunperSize: {
-          description: 'Minimum size of system bonding jumper and bonding conductor',
-          catagoey: {
-              target: { 
-                wire: [
-                  { 
-                    name: 'Copper, AWG or kcmil', 
-                    value: [14, 12, 10, 8, 6, 4, 3, 2, 1, 0, 0, 0, 0, 250, 350, 400, 500, 700, 800]
-                  },
-                  {
-                    name: 'Aluminum, AWG or kcmil', 
-                    value: [12, 10, 8, 6, 4, 2, 1, 0, 0, 0, 0, 250, 350, 400, 500, 600, 800, 1000, 1250]
-                  }
-                ],
-                bus: [
-                  { 
-                    name: 'Copper, mm2', 
-                    value: [2, 3.5, 5.5, 8.5, 10.5, 21, 26.5, 33.5, 42.5, 53.5, 67.5, 84, 107, 127.5, 177.5, 203, 253.5, 355, 405.5]
-                    },
-                  {
-                    name: 'Aluminum, mm2', 
-                    value: [3.5, 5.5, 8.5, 10.5, 21, 26.5, 33.5, 42.5, 53.5, 67.5, 84, 127, 177.5, 203, 253.5, 355, 405.5, 507, 633.5]
-                    }
-                  ]
-          }
-        }
-      }
+      
     }
-  }
   },
 
   computed: {
     ...mapGetters(["getLeastAmp", "getLeastAwg", "getFeederAwg"]),
-    ...mapState(["houseDemands"]),
+    ...mapState(["houseDemands", "tables","rules"]),
 
     // total amp demand in amps
     totalDemandWatts() {
@@ -294,23 +180,23 @@ export default {
         return " Upgrade to commercial grade recommended.";
       }
     },
-
+    // From table 39 get feeder size in AWG
     getFeederSize: function () {
-      return this.table39.ov_rating_amp.find((a) => a >= this.totalDemandAmps);
+      return this.tables[2].ov_rating_amp.find((a) => a >= this.totalDemandAmps);
     },
    
 
-    //Over current protection selection for copper wire 75C
+    //Over current protection selection for copper wire 75C from table 13
     ocProtection: function () {
-      return this.table13.ocAmp.find((a) => a >= this.totalDemandAmps);
+      return this.tables[6].ocAmp.find((a) => a >= this.totalDemandAmps);
     },
 
     // Bonding jumper size as table 16 
     bondingSize: function() {
-      var index = this.table16.ampereRating.value.findIndex(v => v >= this.totalDemandAmps);
+      var index = this.tables[7].ampereRating.value.findIndex(v => v >= this.totalDemandAmps);
       // console.log('table16 amp rating index: ', index);
-      let size = {copper: this.table16.bondingJunperSize.catagoey.target.wire[0].value[index],
-                   al: this.table16.bondingJunperSize.catagoey.target.wire[1].value[index]};
+      let size = {copper: this.tables[7].bondingJunperSize.catagoey.target.wire[0].value[index],
+                   al: this.tables[7].bondingJunperSize.catagoey.target.wire[1].value[index]};
       // console.log("Bonding jumper size: ", size);
       return size;
     },

@@ -23,7 +23,7 @@ export default {
     items: [
       { name: "Blogs", src: "/blog/showblogs" },
       { name: "Load Caculator", src: "/calcs" },
-      { name: "CSS Animation", src: "/cssanimation" },
+      { name: "Voltage Drop", src: "/volDrop" },
       { name: "Home", src: "/home" },
     ],
   }),

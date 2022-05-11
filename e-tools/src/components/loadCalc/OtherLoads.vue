@@ -41,18 +41,18 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "OtherLoads",
   props: ['hasaRange','clear_data' ],
   data: function () {
     return {
-      // hasRange: this.hasaRange,
       otherLoads: undefined,
       totalOtherLoads: 0,
-      rules: [
-        (value) =>
-          (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
-      ],
+      // rules: [
+      //   (value) =>
+      //     (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
+      // ],
     };
   },
 
@@ -71,6 +71,10 @@ export default {
       // console.log("status changed.");
       this.updateLoads();
     },
+  },
+
+  computed:{
+    ...mapState(["rules"]),
   },
 
   methods: {

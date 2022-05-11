@@ -101,6 +101,7 @@
 
 <script>
 //import func from '../../vue-temp/vue-editor-bridge';
+import { mapState } from 'vuex'
 export default {
   name: "ACSpaceHeating",
   data: function () {
@@ -113,14 +114,15 @@ export default {
       hasacLoads: false,
       hasAcSph: false,
 
-      rules: [
-        (value) =>
-          (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
-      ],
+      // rules: [
+      //   (value) =>
+      //     (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
+      // ],
     };
   },
   props: ['clear_data'],
   computed: {
+    ...mapState(["rules"]),
     // if Air conditioner and space heating work at the same time
     acSphTotal: function () {
       return this.hasAcSph

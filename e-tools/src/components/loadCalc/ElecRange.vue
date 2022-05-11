@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: "ElecRange",
   data: function () {
@@ -62,10 +63,13 @@ export default {
       hasRange: false,
       rangeWatt: undefined,
       revisedRange:0,
-      rules: [
-        (value) => (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
-      ],
+      // rules: [
+      //   (value) => (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
+      // ],
     };
+  },
+  computed:{
+    ...mapState(["rules"]),
   },
   props: ['clear_data'],
   watch: {

@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "WaterHeater",
   data: function () {
@@ -68,13 +69,13 @@ export default {
       hasWaterHeater: false,
       hasMoreWaterHeater: false,
       waterHtr: undefined,
-      totalWaterHeater: 0,
-      rules: [
-        (value) => (value && RegExp("^[0-9]+.*$").test(value)) || "Positive number only",
-      ],
+      totalWaterHeater: 0
     };
   },
   props: ['clear_data'],
+  computed:{
+    ...mapState(["rules"]),
+  },
   watch: {
       clear_data(newval, oldval) {
       // console.log('cleardata is newval', newval, oldval);
