@@ -4,7 +4,7 @@
     Name: <span>{{people.name}}</span>
     <hr/>
     Age: <span>{{people.age}}</span>
-    <button @click="people.name += '~'">change name</button><br>
+    <button @click="people.name += '~'">change name</button><br/>
     <button @click="people.age++">change age</button>
 </div>
    

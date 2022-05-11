@@ -42,7 +42,7 @@ onMounted(()=>{
   </div>
   <p>{{ count }}</p>
   <button @click="count++">Count+1</button>
-<hr>
+<hr/>
 <people-show/>
 </template>
 <style>
