@@ -1,6 +1,6 @@
 <script lang="ts">
 import { ref, reactive, onMounted, computed } from 'vue'
-// import fetchCount from './fetchCount'
+import fetchCount from './fetchCount'
 import PeopleShow from './components/PeopleShow.vue'
 interface AppInfo {
   appName: string,
@@ -21,17 +21,17 @@ export default{
     count,
     appInfo
   }
-/*
+
 onMounted(()=>{
   fetchCount((initialCount:number)=>{
     count.value = initialCount
   })
-})*/
-// function addOne(num: number){
-//     if(count.value!==null){
-//     count.value += num
-//   } 
-// }
+})
+function addOne(num: number){
+    if(count.value!==null){
+    count.value += num
+  } 
+}
   }
   }
 </script>
